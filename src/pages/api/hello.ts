@@ -8,6 +8,15 @@ type Data = {
 export default function handler(
   req: NextApiRequest,
   res: NextApiResponse<Data>
-) {
-  res.status(200).json({ name: 'John Doe' })
+  ) {
+
+  const params = req.body
+
+  if (req.method === 'POST') {
+    // Process a GET request
+    console.log(params.name)
+    res.send({ name: params.name })
+  } else {
+    // Handle any other HTTP method
+  }
 }

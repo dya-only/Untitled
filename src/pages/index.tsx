@@ -3,7 +3,7 @@ import Image from 'next/image'
 import { Inter } from '@next/font/google'
 import styles from '@/styles/Home.module.css'
 
-export default function Home() {
+export default function Home({ data }: any) {
   return (
     <>
       <Head>
@@ -16,7 +16,22 @@ export default function Home() {
         <div className={styles.center}></div>
 
         <div className={styles.title}>FRONT-END Developer</div>
+        <div className={styles.name}>{ data.name }</div>
       </main>
     </>
   )
+}
+
+export async function getServerSideProps() {
+
+  const res = await fetch('http://localhost:3000/api/hello', {
+    method: 'POST',
+    headers: {
+        "Content-Type": "application/json",
+    },
+    body: JSON.stringify({ name: "DIA" })
+  })
+  const data = await res.json()
+
+  return { props: { data } }
 }

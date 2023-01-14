@@ -50,6 +50,11 @@
   padding-bottom: 200px;
 }
 
+.name {
+  font-size: 30px;
+  font-family: "Gyeonggi"
+}
+
 /* Enable hover only on non-touch devices */
 @media (hover: hover) and (pointer: fine) {
   .card:hover {
