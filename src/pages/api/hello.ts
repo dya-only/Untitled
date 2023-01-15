@@ -14,8 +14,7 @@ export default function handler(
 
   if (req.method === 'POST') {
     // Process a GET request
-    console.log(params.name)
-    res.send({ name: params.name })
+    res.status(200).json({ name: params.name })
   } else {
     // Handle any other HTTP method
   }

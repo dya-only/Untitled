@@ -2,8 +2,3 @@
   font-family: 'Gyeonggi_Title';
   src: url('./Gyeonggi_Title_Bold.ttf') format('truetype');
 }
-
-@font-face {
-  font-family: 'Gyeonggi';
-  src: url('./Gyeonggi_BG.ttf') format('truetype');
-}

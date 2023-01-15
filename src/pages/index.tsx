@@ -12,11 +12,13 @@ export default function Home({ data }: any) {
         <meta name="viewport" content="width=device-width, initial-scale=1" />
         <link rel="icon" href="/favicon.ico" />
       </Head>
+      <nav className={styles.navbar}>
+
+      </nav>
       <main className={styles.main}>
         <div className={styles.center}></div>
 
-        <div className={styles.title}>FRONT-END Developer</div>
-        <div className={styles.name}>{ data.name }</div>
+        <div className={styles.title}>Blog</div>
       </main>
     </>
   )
