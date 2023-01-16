@@ -3,6 +3,8 @@ import Image from 'next/image'
 import { Inter } from '@next/font/google'
 import styles from '@/styles/Home.module.css'
 
+import Card from './components/card'
+
 export default function Home({ data }: any) {
   return (
     <>
@@ -12,13 +14,16 @@ export default function Home({ data }: any) {
         <meta name="viewport" content="width=device-width, initial-scale=1" />
         <link rel="icon" href="/favicon.ico" />
       </Head>
+      
       <nav className={styles.navbar}>
-
+        <div className={styles.navtitle}>{ data.name }</div>
       </nav>
-      <main className={styles.main}>
-        <div className={styles.center}></div>
 
-        <div className={styles.title}>Blog</div>
+      <main className={styles.main}>
+        <div className={styles.title}>{ data.name }</div>
+
+        <Card />
+
       </main>
     </>
   )
@@ -31,7 +36,7 @@ export async function getServerSideProps() {
     headers: {
         "Content-Type": "application/json",
     },
-    body: JSON.stringify({ name: "DIA" })
+    body: JSON.stringify({ name: "Blog" })
   })
   const data = await res.json()
 
