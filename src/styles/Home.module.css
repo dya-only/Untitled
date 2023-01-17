@@ -4,10 +4,10 @@
   justify-content: center;
   align-items: center; */
   /* min-height: 100vh; */
-  margin-bottom: 500px;
+  margin-bottom: 1000px;
   /* margin-top: -300px; */
 }
-
+/* 
 .title {
   font-weight: bold;
   font-size: 50px;
@@ -22,14 +22,14 @@
   font-size: 30px;
   font-family: "Gyeonggi_Title";
   z-index: 20;
-}
+} */
 
-.navbar {
+/* .navbar {
   width: 100vw;
   height: 50px;
   background: rgb(26, 26, 26);
-  /* opacity: 0.2; */
-  backdrop-filter: blur(30px);
+  opacity: 0.5;
+  backdrop-filter: blur(24px);
   position: fixed;
   z-index: 40;
   display: flex;
@@ -37,8 +37,21 @@
 }
 
 .navtitle {
-  font-size: 20px;
+  font-size: 25px;
   font-weight: bold;
   color: white;
-  padding: 10px 10px 10px 20px;
+  padding: 10px 10px 10px 80px;
 }
+
+.in {
+  width: 50px;
+  height: 50px;
+  padding: 10px;
+  border-radius: 10px;
+  transition: color 0.3s, background-color 0.3s;
+}
+
+.in:hover {
+  color: #121212;
+  background-color: white;
+} */

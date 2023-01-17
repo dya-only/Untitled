@@ -1,12 +1,12 @@
 import Head from 'next/head'
 import Image from 'next/image'
 import { Inter } from '@next/font/google'
-import styles from '@/styles/Home.module.css'
+// import styles from '@/styles/Home.module.css'
 
 export default function Home({ data }: any) {
   return (
-    <main className={styles.main}>
-      <div className={styles.title}>{ data }</div>
+    <main className="">
+      <div className="">{ data }</div>
     </main>
   )
 }
