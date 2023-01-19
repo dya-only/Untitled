@@ -1,11 +1,12 @@
 // Next.js API route support: https://nextjs.org/docs/api-routes/introduction
 import type { NextApiRequest, NextApiResponse } from 'next'
-// import base64 from 'base-64'
+import base64 from 'base-64'
 import { useState } from 'react'
 
 type Data = {
   message: string
-  error: boolean
+  id: string
+  pw: string
 }
 
 export default function handler(
@@ -14,22 +15,23 @@ export default function handler(
   ) {
 
   const params = req.body
-  const [acc, setAcc] = useState({
+  // const [acc, setAcc] = useState({
+  //   id: '',
+  //   pw: ''
+  // })
+  let acc = {
     id: '',
     pw: ''
-  })
+  }
 
   if (req.method === 'POST') {
     // Process a POST request
 
-    // setAcc({
-    //   ...acc,
-    //   [id]: params.id,
-    //   [pw]: params.pw
-    // })
+    acc.id = base64.decode(params.id)
+    acc.pw = base64.decode(params.pw)
 
-    // if (params.)
-    res.status(200).json({ message: 'success', error: false })
+    // res.status(200).json({ id: acc.id, pw: acc.pw })
+    res.status(200).json({ message: 'successful', id: acc.id, pw: acc.pw })
   } else {
     // Handle any other HTTP method
   }

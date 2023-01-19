@@ -6,10 +6,12 @@ import { Inter } from '@next/font/google'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faRightToBracket } from '@fortawesome/free-solid-svg-icons'
 import Logo from '../assets/logo-bg.png'
+import Link from 'next/link'
 
-import Card from './components/card'
+// import Card from './components/card'
 
 export default function Home({ data }: any) {
+
   return (
     <Fragment>
       <Head>
@@ -25,13 +27,15 @@ export default function Home({ data }: any) {
           <Image className='w-[40px]' src={ Logo } alt='' />
           {/* <div className="text-2xl font-bold ml-2">{ data.name }</div> */}
         </div>
-        <FontAwesomeIcon className="w-[50px] h-[50px] p-[10px] text-white transition duration-300 hover:text-zinc-500 rounded-2xl -mr-[200px] cursor-pointer" icon={ faRightToBracket } />
+        <Link href="/signin">
+          <FontAwesomeIcon className="w-[50px] h-[50px] p-[10px] text-white transition duration-300 hover:text-zinc-500 rounded-2xl -mr-[200px] cursor-pointer" icon={ faRightToBracket } />
+        </Link>
       </nav>
 
       <main className="w-[45%] h-[1500px] flex justify-center">
 
         <div className="profile pt-[12rem]">
-          <div className="text-[50px] font-bold">Blog</div>
+          <div className="text-[50px] font-bold">{ data.name }</div>
         </div>
 
         {/* <Card /> */}
