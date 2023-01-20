@@ -1,18 +1,28 @@
 import Head from 'next/head'
 import Image from 'next/image'
+import Link from 'next/link'
+import { useRouter } from 'next/router'
 import { Fragment, useState } from 'react'
 import { Inter } from '@next/font/google'
 // import styles from '@/styles/Home.module.css'
 import base64 from 'base-64'
+import Cookies from 'js-cookie'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faRightToBracket } from '@fortawesome/free-solid-svg-icons'
+
 import Logo from '../assets/logo-bg.png'
-import Link from 'next/link'
+import Programming from '../assets/programming.png'
+import Bg from '../assets/bg-sign.jpg'
 
 // import Card from './components/card'
 
 export default function SignIn() {
+  const router = useRouter()
   const [isAuth, setIsAuth] = useState(false)
+  const [inputs, setInputs] = useState({
+    id: '',
+    pw: ''
+  })
 
   const onClickAuth = async () => {
     const res = await fetch('http://localhost:3000/api/auth', {
@@ -20,14 +30,28 @@ export default function SignIn() {
       headers: {
         "Content-Type": "application/json",
       },
-      body: JSON.stringify({ id: base64.encode("root"), pw: base64.encode("root") })
+      body: JSON.stringify({ id: base64.encode(inputs.id), pw: base64.encode(inputs.pw) })
     })
     const data = await res.json()
     console.log("auth data: " + JSON.stringify(data))
 
     if (data.id == 'root' && data.pw == 'root') {
       setIsAuth(true)
+      // sessionStorage.setItem("isAcced", data.id)
+      Cookies.set("isAcced", data.id)
+      console.log(Cookies.get())
+      router.push('/')
     }
+  }
+
+  const onChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const { value, id } = e.target
+
+    setInputs({
+      ...inputs,
+      [id]: value
+    })
+    console.log(inputs)
   }
 
   return (
@@ -40,7 +64,7 @@ export default function SignIn() {
       </Head>
       
       {/* NavBar */}
-      <nav className="w-screen h-[50px] fixed flex justify-around items-center bg-opacity-50 z-50 px-6 backdrop-filter backdrop-blur-xl">
+      <nav className="w-screen h-[50px] fixed flex justify-around items-center bg-zinc-900 drop-shadow-2xl z-50 px-6 backdrop-filter backdrop-blur-xl">
         <Link className='flex items-center -ml-[210px] cursor-pointer' href="/">
           <Image className='w-[40px]' src={ Logo } alt='' />
           {/* <div className="text-2xl font-bold ml-2">{ data.name }</div> */}
@@ -52,11 +76,25 @@ export default function SignIn() {
 
       <main className="w-screen h-screen flex flex-col justify-center items-center">
 
-        { isAuth == true ? <div className="mb-12">Welcome</div> : <div className="">You can Sign in</div> }
+        {/* { isAuth == true ? <div className="mb-12">Welcome</div> : <div className="mb-12">You can Sign in</div> } */}
+        <Image className='w-screen h-screen object-cover absolute -z-10 blur-2xl brightness-50' src={Bg} alt='' />
 
-        <input className='w-[200px] h-[30px] mb-2' placeholder='username' />
-        <input className='w-[200px] h-[30px] mb-2' placeholder='password' />
-        <button onClick={ () => onClickAuth() }>Sign in</button>
+        <div className="form flex justify-center items-center drop-shadow-2xl">
+          <div className="flex flex-col justify-center items-center p-20 rounded-l-xl bg-zinc-900">
+            <div className="font-bold text-2xl mb-12 -mt-12">Sign in</div>
+            <div className="align-left mb-2">
+              <div className="text-lg pl-2">Username</div>
+              <input className='w-[250px] h-[50px] pl-4 font-bold bg-white text-zinc-700 rounded-lg transition duration-300 hover:scale-105' id='id' onChange={ onChange } />
+            </div>
+            <div className="align-left mb-6">
+              <div className="text-lg pl-2">Password</div>
+              <input className='w-[250px] h-[50px] pl-4 font-bold bg-white text-zinc-700 rounded-lg transition duration-300 hover:scale-105' type='password' id='pw' onChange={ onChange } />
+            </div>
+            <button className='w-[250px] h-[50px] bg-blue-500 rounded-lg transition duration-300 hover:brightness-75 hover:scale-105 active:scale-95' onClick={ () => onClickAuth() }>Sign in</button>
+          </div>
+        
+          <Image className='object-cover w-[350px] h-[430px] rounded-r-xl' src={Programming} alt='' />
+        </div>
 
       </main>
     </Fragment>

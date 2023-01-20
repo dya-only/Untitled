@@ -1,17 +1,27 @@
 import Head from 'next/head'
 import Image from 'next/image'
-import { Fragment } from 'react'
+import Link from 'next/link'
+import { useRouter } from 'next/router'
+import { Fragment, useEffect } from 'react'
 import { Inter } from '@next/font/google'
 // import styles from '@/styles/Home.module.css'
+import Cookies from 'js-cookie'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faRightToBracket } from '@fortawesome/free-solid-svg-icons'
+
 import Logo from '../assets/logo-bg.png'
-import Link from 'next/link'
 
 // import Card from './components/card'
 
 export default function Home({ data }: any) {
+  const router = useRouter()
 
+  useEffect(() => {
+    if (Cookies.get("isAcced") !== null || Cookies.get("isAcced") !== '') {
+      console.log('login successful')
+    }
+  }, [])
+  
   return (
     <Fragment>
       <Head>
@@ -22,13 +32,15 @@ export default function Home({ data }: any) {
       </Head>
       
       {/* NavBar */}
-      <nav className="w-screen h-[50px] fixed flex justify-around items-center bg-opacity-50 z-50 px-6 backdrop-filter backdrop-blur-xl">
-        <div className='flex items-center -ml-[210px] cursor-pointer'>
+      <nav className="w-screen h-[50px] fixed flex justify-around items-center bg-opacity-50 z-50 backdrop-filter backdrop-blur-xl">
+        <div className='flex items-center pr-[350px] cursor-pointer'>
           <Image className='w-[40px]' src={ Logo } alt='' />
           {/* <div className="text-2xl font-bold ml-2">{ data.name }</div> */}
         </div>
         <Link href="/signin">
-          <FontAwesomeIcon className="w-[50px] h-[50px] p-[10px] text-white transition duration-300 hover:text-zinc-500 rounded-2xl -mr-[200px] cursor-pointer" icon={ faRightToBracket } />
+          { Cookies.get("isAcced") == null || Cookies.get("isAcced") == '' ?
+            <FontAwesomeIcon className="w-[50px] h-[50px] p-[10px] text-white transition duration-300 hover:text-zinc-500 rounded-2xl pl-[0px] cursor-pointer" icon={ faRightToBracket } />
+          : <button className='font-bold text-xl' onClick={ () => { Cookies.set("isAcced", ''); router.push('/') } }>Logout</button> }
         </Link>
       </nav>
 
@@ -52,7 +64,7 @@ export async function getServerSideProps() {
     headers: {
         "Content-Type": "application/json",
     },
-    body: JSON.stringify({ name: "Blog" })
+    body: JSON.stringify({ name: "Hello, World!" })
   })
   const data = await res.json()
 
