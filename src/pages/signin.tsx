@@ -38,9 +38,9 @@ export default function SignIn() {
 
     if (data.id == 'root' && data.pw == 'root') {
       setIsAuth(true)
-      // sessionStorage.setItem("isAcced", data.id)
-      Cookies.set("isAcced", data.id)
-      console.log(Cookies.get())
+      sessionStorage.setItem("isAcced", data.id)
+      // Cookies.set("isAcced", data.id)
+      console.log(sessionStorage.getItem("isAcced"))
       router.push('/')
     } else {
       setIsAuth(false)
@@ -93,7 +93,7 @@ export default function SignIn() {
               <input className='w-[250px] h-[50px] pl-4 font-bold bg-white text-zinc-700 rounded-lg transition duration-300 hover:scale-105' type='password' id='pw' onChange={ onChange } />
             </div>
             <button className='w-[250px] h-[50px] bg-blue-500 rounded-lg transition duration-300 hover:brightness-75 hover:scale-105 active:scale-95' onClick={ () => onClickAuth() }>Sign in</button>
-            { isAuth == false ? <div className="text-red-400 h-[430px] flex flex-col justify-end items-center pb-4 absolute z-20">아이디 또는 비밀번호가 틀렸습니다.</div> : null }
+            { isAuth == false ? <div className="text-red-400 pt-[480px] flex flex-col justify-end items-center pb-4 absolute -z-10">아이디 또는 비밀번호가 틀렸습니다.</div> : null }
           </div>
         
           <Image className='object-cover w-[350px] h-[430px] rounded-r-xl' src={Programming} alt='' />
@@ -103,17 +103,3 @@ export default function SignIn() {
     </Fragment>
   )
 }
-
-// export async function getServerSideProps() {
-
-//   const res = await fetch('http://localhost:3000/api/hello', {
-//     method: 'POST',
-//     headers: {
-//         "Content-Type": "application/json",
-//     },
-//     body: JSON.stringify({ name: "Blog" })
-//   })
-//   const data = await res.json()
-
-//   return { props: { data } }
-// }

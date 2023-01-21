@@ -50,13 +50,19 @@ export default function Home({ data }: any) {
       sub: '안녕하세요'
     }
   ]
-  const List = Contents.map((data) => (<Card title={data.title} sub={data.sub} />))
+  // const List = Contents.map((data, i) => (<Card title={data.title} sub={data.sub} key={i} />))
 
-  useEffect(() => {
-    if (Cookies.get("isAcced") !== null || Cookies.get("isAcced") !== '') {
-      console.log(`login successful: ${Cookies.get("isAcced")}`)
-    }
-  }, [])
+  // useEffect(() => {
+  //   if (Cookies.get("isAcced") !== null || Cookies.get("isAcced") !== '') {
+  //     console.log(`login successful: ${Cookies.get("isAcced")}`)
+  //   }
+  // }, [])
+
+  const onClickLogout = () => {
+    // Cookies.set("isAcced", '')
+    sessionStorage.setItem("isAcced", '')
+    router.push('/')
+  }
   
   return (
     <Fragment>
@@ -74,10 +80,11 @@ export default function Home({ data }: any) {
           {/* <div className="text-2xl font-bold ml-2">{ data.name }</div> */}
         </div>
         <Link href="/signin">
-          { Cookies.get("isAcced") == null || Cookies.get("isAcced") == '' ?
-            // <FontAwesomeIcon className="w-[50px] h-[50px] p-[10px] text-white transition duration-300 hover:text-zinc-500 rounded-2xl pl-[0px] cursor-pointer" icon={ faRightToBracket } />
+          {/* { Cookies.get("isAcced") == null || Cookies.get("isAcced") == '' ?
             <button className='font-bold text-zinc-800 text-ld rounded-[12px] bg-white w-24 h-8 transition duration-300 hover:scale-105 hover:brightness-75'>Login</button>
-          : <button className='font-bold text-xl' onClick={ () => { Cookies.set("isAcced", ''); router.push('/') } }>Logout</button> }
+          : <button className='font-bold text-xl' onClick={ () => onClickLogout }>Logout</button> } */}
+          <button className='font-bold text-zinc-800 text-md rounded-[12px] bg-white w-24 h-8 transition duration-300 hover:scale-105 hover:brightness-75'>Login</button>
+          <button className='font-bold text-white text-md rounded-[12px] w-24 h-8 transition duration-300 hover:scale-105 hover:brightness-75 ml-4' onClick={ () => onClickLogout() }>Logout</button> 
         </Link>
       </nav>
 
@@ -88,7 +95,7 @@ export default function Home({ data }: any) {
         </div> */}
 
         <div className="pt-[200px] font-bold text-2xl flex flex-wrap">
-          {List}
+          {/* {List} */}
         </div>
 
       </main>
