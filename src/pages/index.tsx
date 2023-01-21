@@ -2,7 +2,7 @@ import Head from 'next/head'
 import Image from 'next/image'
 import Link from 'next/link'
 import { useRouter } from 'next/router'
-import { Fragment, useEffect } from 'react'
+import { Fragment, useEffect, useState } from 'react'
 import { Inter } from '@next/font/google'
 // import styles from '@/styles/Home.module.css'
 import Cookies from 'js-cookie'
@@ -50,13 +50,15 @@ export default function Home({ data }: any) {
       sub: '안녕하세요'
     }
   ]
-  // const List = Contents.map((data, i) => (<Card title={data.title} sub={data.sub} key={i} />))
+  const List = Contents.map((data, i) => (<Card title={data.title} sub={data.sub} key={i} />))
+  const [user, setUser] = useState('')
 
-  // useEffect(() => {
-  //   if (Cookies.get("isAcced") !== null || Cookies.get("isAcced") !== '') {
-  //     console.log(`login successful: ${Cookies.get("isAcced")}`)
-  //   }
-  // }, [])
+  useEffect(() => {
+    if (sessionStorage.getItem("isAcced") !== null || sessionStorage.getItem("isAcced") !== '') {
+      console.log(`login successful: ${sessionStorage.getItem("isAcced")}`)
+      setUser(sessionStorage.getItem("isAcced") || '')
+    }
+  }, [])
 
   const onClickLogout = () => {
     // Cookies.set("isAcced", '')
@@ -80,22 +82,20 @@ export default function Home({ data }: any) {
           {/* <div className="text-2xl font-bold ml-2">{ data.name }</div> */}
         </div>
         <Link href="/signin">
-          {/* { Cookies.get("isAcced") == null || Cookies.get("isAcced") == '' ?
-            <button className='font-bold text-zinc-800 text-ld rounded-[12px] bg-white w-24 h-8 transition duration-300 hover:scale-105 hover:brightness-75'>Login</button>
-          : <button className='font-bold text-xl' onClick={ () => onClickLogout }>Logout</button> } */}
-          <button className='font-bold text-zinc-800 text-md rounded-[12px] bg-white w-24 h-8 transition duration-300 hover:scale-105 hover:brightness-75'>Login</button>
-          <button className='font-bold text-white text-md rounded-[12px] w-24 h-8 transition duration-300 hover:scale-105 hover:brightness-75 ml-4' onClick={ () => onClickLogout() }>Logout</button> 
+          { Cookies.get("isAcced") == null || Cookies.get("isAcced") == '' ?
+            <button className='font-bold text-zinc-800 text-md rounded-[12px] bg-white w-24 h-8 transition duration-300 hover:scale-105 hover:brightness-75'>Login</button>
+          : <button className='font text-xl text-white text-md rounded-[12px] w-24 h-8 transition duration-300 hover:scale-105 hover:brightness-75' onClick={ () => onClickLogout() }>Logout</button>  }
         </Link>
       </nav>
 
       <main className="w-screen flex flex-col items-center">
 
-        {/* <div className="profile -mt-[600px]">
-          <div className="text-[50px] font-bold ">{ data.name }{', ' + Cookies.get("isAcced") || ''}!</div>
-        </div> */}
+        <div className="profile mt-[200px]">
+          <div className="text-[50px] font-bold ">{ data.name + ", " + user + "!" }</div>
+        </div>
 
-        <div className="pt-[200px] font-bold text-2xl flex flex-wrap">
-          {/* {List} */}
+        <div className="mt-[200px] font-bold text-2xl flex justify-center flex-wrap">
+          {List}
         </div>
 
       </main>
@@ -109,7 +109,7 @@ export async function getServerSideProps() {
     headers: {
         "Content-Type": "application/json",
     },
-    body: JSON.stringify({ name: `Hello, World` })
+    body: JSON.stringify({ name: `Welcome` })
   })
   const data = await res.json()
 
