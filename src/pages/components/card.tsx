@@ -3,24 +3,16 @@ import Image from 'next/image'
 import { Inter } from '@next/font/google'
 // import styles from '@/styles/Home.module.css'
 
-export default function Home({ data }: any) {
+import Logo from '/src/assets/logo.png'
+
+export default function Card(props: any) {
   return (
-    <main className="">
-      <div className="">{ data }</div>
-    </main>
+    <div className="card m-12 drop-shadow-xl transition duration-300 hover:scale-105 active:scale-100 cursor-pointer">
+      <Image className="thumb w-[300px] h-[160px] object-cover rounded-t-xl" src={Logo} alt={''} />
+      <div className="pl-4 pt-2 bg-zinc-900 p-4 rounded-b-xl">
+        <div className="title text-white font-bold text-2xl">{ props?.title }</div>
+        <div className="sub text-zinc-400">{ props?.sub }</div>
+      </div>
+    </div>
   )
-}
-
-export async function getServerSideProps() {
-
-  const res = await fetch('http://localhost:3000/api/hello', {
-    method: 'POST',
-    headers: {
-        "Content-Type": "application/json",
-    },
-    body: JSON.stringify({ name: "Card" })
-  })
-  const data = await res.json()
-
-  return { props: { data } }
 }

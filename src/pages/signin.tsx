@@ -18,7 +18,8 @@ import Bg from '../assets/bg-sign.jpg'
 
 export default function SignIn() {
   const router = useRouter()
-  const [isAuth, setIsAuth] = useState(false)
+
+  const [isAuth, setIsAuth] = useState(true)
   const [inputs, setInputs] = useState({
     id: '',
     pw: ''
@@ -41,6 +42,8 @@ export default function SignIn() {
       Cookies.set("isAcced", data.id)
       console.log(Cookies.get())
       router.push('/')
+    } else {
+      setIsAuth(false)
     }
   }
 
@@ -64,19 +67,18 @@ export default function SignIn() {
       </Head>
       
       {/* NavBar */}
-      <nav className="w-screen h-[50px] fixed flex justify-around items-center bg-zinc-900 drop-shadow-2xl z-50 px-6 backdrop-filter backdrop-blur-xl">
-        <Link className='flex items-center -ml-[210px] cursor-pointer' href="/">
+      <nav className="w-screen h-[50px] fixed flex justify-around items-center bg-opacity-50 z-50 backdrop-filter backdrop-blur-xl">
+        <Link className='flex items-center pr-[350px] cursor-pointer' href='/'>
           <Image className='w-[40px]' src={ Logo } alt='' />
           {/* <div className="text-2xl font-bold ml-2">{ data.name }</div> */}
         </Link>
         <Link href="/signin">
-          <FontAwesomeIcon className="w-[50px] h-[50px] p-[10px] text-white transition duration-300 hover:text-zinc-500 rounded-2xl -mr-[200px] cursor-pointer" icon={ faRightToBracket } />
+        <button className='font-bold text-zinc-800 text-ld rounded-[12px] bg-white w-24 h-8 transition duration-300 hover:scale-105 hover:brightness-75'>Login</button>
         </Link>
       </nav>
 
       <main className="w-screen h-screen flex flex-col justify-center items-center">
 
-        {/* { isAuth == true ? <div className="mb-12">Welcome</div> : <div className="mb-12">You can Sign in</div> } */}
         <Image className='w-screen h-screen object-cover absolute -z-10 blur-2xl brightness-50' src={Bg} alt='' />
 
         <div className="form flex justify-center items-center drop-shadow-2xl">
@@ -91,6 +93,7 @@ export default function SignIn() {
               <input className='w-[250px] h-[50px] pl-4 font-bold bg-white text-zinc-700 rounded-lg transition duration-300 hover:scale-105' type='password' id='pw' onChange={ onChange } />
             </div>
             <button className='w-[250px] h-[50px] bg-blue-500 rounded-lg transition duration-300 hover:brightness-75 hover:scale-105 active:scale-95' onClick={ () => onClickAuth() }>Sign in</button>
+            { isAuth == false ? <div className="text-red-400 h-[430px] flex flex-col justify-end items-center pb-4 absolute z-20">아이디 또는 비밀번호가 틀렸습니다.</div> : null }
           </div>
         
           <Image className='object-cover w-[350px] h-[430px] rounded-r-xl' src={Programming} alt='' />

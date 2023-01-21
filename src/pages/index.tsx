@@ -11,14 +11,50 @@ import { faRightToBracket } from '@fortawesome/free-solid-svg-icons'
 
 import Logo from '../assets/logo-bg.png'
 
-// import Card from './components/card'
+import Card from './components/card'
 
 export default function Home({ data }: any) {
   const router = useRouter()
 
+  const Contents = [
+    {
+      title: 'Hello, World!',
+      sub: '안녕하세요'
+    },
+    {
+      title: 'Hello, World!',
+      sub: '안녕하세요'
+    },
+    {
+      title: 'Hello, World!',
+      sub: '안녕하세요'
+    },
+    {
+      title: 'Hello, World!',
+      sub: '안녕하세요'
+    },
+    {
+      title: 'Hello, World!',
+      sub: '안녕하세요'
+    },
+    {
+      title: 'Hello, World!',
+      sub: '안녕하세요'
+    },
+    {
+      title: 'Hello, World!',
+      sub: '안녕하세요'
+    },
+    {
+      title: 'Hello, World!',
+      sub: '안녕하세요'
+    }
+  ]
+  const List = Contents.map((data) => (<Card title={data.title} sub={data.sub} />))
+
   useEffect(() => {
     if (Cookies.get("isAcced") !== null || Cookies.get("isAcced") !== '') {
-      console.log('login successful')
+      console.log(`login successful: ${Cookies.get("isAcced")}`)
     }
   }, [])
   
@@ -39,18 +75,21 @@ export default function Home({ data }: any) {
         </div>
         <Link href="/signin">
           { Cookies.get("isAcced") == null || Cookies.get("isAcced") == '' ?
-            <FontAwesomeIcon className="w-[50px] h-[50px] p-[10px] text-white transition duration-300 hover:text-zinc-500 rounded-2xl pl-[0px] cursor-pointer" icon={ faRightToBracket } />
+            // <FontAwesomeIcon className="w-[50px] h-[50px] p-[10px] text-white transition duration-300 hover:text-zinc-500 rounded-2xl pl-[0px] cursor-pointer" icon={ faRightToBracket } />
+            <button className='font-bold text-zinc-800 text-ld rounded-[12px] bg-white w-24 h-8 transition duration-300 hover:scale-105 hover:brightness-75'>Login</button>
           : <button className='font-bold text-xl' onClick={ () => { Cookies.set("isAcced", ''); router.push('/') } }>Logout</button> }
         </Link>
       </nav>
 
-      <main className="w-[45%] h-[1500px] flex justify-center">
+      <main className="w-screen flex flex-col items-center">
 
-        <div className="profile pt-[12rem]">
-          <div className="text-[50px] font-bold">{ data.name }</div>
+        {/* <div className="profile -mt-[600px]">
+          <div className="text-[50px] font-bold ">{ data.name }{', ' + Cookies.get("isAcced") || ''}!</div>
+        </div> */}
+
+        <div className="pt-[200px] font-bold text-2xl flex flex-wrap">
+          {List}
         </div>
-
-        {/* <Card /> */}
 
       </main>
     </Fragment>
@@ -58,13 +97,12 @@ export default function Home({ data }: any) {
 }
 
 export async function getServerSideProps() {
-
   const res = await fetch('http://localhost:3000/api/hello', {
     method: 'POST',
     headers: {
         "Content-Type": "application/json",
     },
-    body: JSON.stringify({ name: "Hello, World!" })
+    body: JSON.stringify({ name: `Hello, World` })
   })
   const data = await res.json()
 
